@@ -12,26 +12,26 @@
  * details.
  */
 
-package com.liferay.mobile.pushnotifications.util;
+package com.liferay.mobile.pushnotifications.sender;
 
-import com.liferay.util.portlet.PortletProps;
+import com.liferay.mobile.pushnotifications.model.Device;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author Bruno Farache
  * @author Silvio Santos
  */
-public class PortletPropsValues {
+public abstract class BaseNotificationSender {
 
-	public static final String ANDROID_API_KEY = PortletProps.get(
-		PortletPropsKeys.ANDROID_API_KEY);
+	protected static List<String> getTokens(List<Device> devices) {
+		List<String> tokens = new ArrayList<String>();
 
-	public static final String IOS_CERT_PASSWORD = PortletProps.get(
-		PortletPropsKeys.IOS_CERT_PASSWORD);
+		for (Device device : devices) {
+			tokens.add(device.getToken());
+		}
 
-	public static final String IOS_CERT_PATH = PortletProps.get(
-		PortletPropsKeys.IOS_CERT_PATH);
-
-	public static final String IOS_SANDBOX = PortletProps.get(
-		PortletPropsKeys.IOS_SANDBOX);
+		return tokens;
+	}
 
 }
