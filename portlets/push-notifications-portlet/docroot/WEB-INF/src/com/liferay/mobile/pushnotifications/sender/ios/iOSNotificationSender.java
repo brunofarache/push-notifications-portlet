@@ -38,7 +38,7 @@ public class iOSNotificationSender extends BaseNotificationSender {
 		throws IOException, PortalException, SystemException {
 
 		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(
-			userId, PLATFORM);
+			userId, IOS);
 
 		if (devices.isEmpty()) {
 			return;
@@ -73,9 +73,7 @@ public class iOSNotificationSender extends BaseNotificationSender {
 		return payload.build();
 	}
 
-	protected static final String PLATFORM = "ios";
-
-	private static ApnsService getService() {
+	protected static ApnsService getService() {
 		if (_apns == null) {
 			String path = PortletPropsValues.IOS_CERT_PATH;
 			String password = PortletPropsValues.IOS_CERT_PASSWORD;
@@ -94,6 +92,8 @@ public class iOSNotificationSender extends BaseNotificationSender {
 
 		return _apns;
 	}
+
+	protected static final String IOS = "ios";
 
 	private static ApnsService _apns;
 
