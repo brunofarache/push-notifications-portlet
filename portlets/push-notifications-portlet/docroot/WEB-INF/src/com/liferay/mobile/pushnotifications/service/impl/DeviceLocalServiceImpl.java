@@ -33,13 +33,7 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 	public void addDevice(long userId, String token, String platform)
 		throws PortalException, SystemException {
 
-		Device device = null;
-
-		try {
-			device = devicePersistence.findByToken(token);
-		}
-		catch (NoSuchDeviceException nsde) {
-		}
+		Device device = devicePersistence.fetchByToken(token);
 
 		if (device == null) {
 			long deviceId = counterLocalService.increment();
