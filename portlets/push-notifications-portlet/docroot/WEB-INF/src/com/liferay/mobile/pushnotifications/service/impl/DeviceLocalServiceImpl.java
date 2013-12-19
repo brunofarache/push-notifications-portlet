@@ -34,17 +34,12 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 	public void addDevice(long userId, String token, String platform)
 		throws PortalException, SystemException {
 
-		Device device = devicePersistence.fetchByToken(token);
+		long deviceId = counterLocalService.increment();
 
-		if (device == null) {
-			long deviceId = counterLocalService.increment();
-
-			device = devicePersistence.create(deviceId);
-
-			device.setToken(token);
-		}
+		Device device = devicePersistence.create(deviceId);
 
 		device.setUserId(userId);
+		device.setToken(token);
 		device.setPlatform(platform);
 		device.setCreateDate(new Date());
 
