@@ -53,6 +53,20 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public void updateUserId(String token)
+		throws PortalException, SystemException {
+
+		try {
+			deviceLocalService.updateUserId(getUserId(), token);
+		}
+		catch (NoSuchDeviceException nsde) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Device " + token + " does not exist");
+			}
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DeviceServiceImpl.class);
 
 }

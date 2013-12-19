@@ -88,4 +88,15 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 		devicePersistence.update(device);
 	}
 
+	@Override
+	public void updateUserId(long userId, String token)
+		throws NoSuchDeviceException, SystemException {
+
+		Device device = devicePersistence.findByToken(token);
+
+		device.setUserId(userId);
+
+		devicePersistence.update(device);
+	}
+
 }
