@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.mobile.pushnotifications.sender.ios;
 
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * @author Silvio Santos
  */
-public class iOSNotificationSender {
+public class IOSNotificationSender {
 
 	public static void send(
 			long userId, String data, String alert, int badge, String sound)

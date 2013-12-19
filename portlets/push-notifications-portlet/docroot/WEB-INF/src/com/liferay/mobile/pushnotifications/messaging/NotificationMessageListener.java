@@ -15,7 +15,7 @@
 package com.liferay.mobile.pushnotifications.messaging;
 
 import com.liferay.mobile.pushnotifications.sender.android.AndroidNotificationSender;
-import com.liferay.mobile.pushnotifications.sender.ios.iOSNotificationSender;
+import com.liferay.mobile.pushnotifications.sender.ios.IOSNotificationSender;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -43,7 +43,7 @@ public class NotificationMessageListener implements MessageListener {
 				AndroidNotificationSender.send(
 					userId, collapseKey, data, timeToLive, delayWhileIdle);
 
-				iOSNotificationSender.send(userId, alert, data, badge, sound);
+				IOSNotificationSender.send(userId, alert, data, badge, sound);
 			}
 			catch (Exception e) {
 				_log.error(e);
