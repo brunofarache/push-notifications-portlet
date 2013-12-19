@@ -22,9 +22,10 @@ public class PortletPropsKeys {
 
 	public static final String ANDROID_API_KEY = "android.api.key";
 
-	public static final String IOS_CERT_PASSWORD = "ios.cert.password";
+	public static final String IOS_CERTIFICATE_PASSWORD =
+		"ios.certificate.password";
 
-	public static final String IOS_CERT_PATH = "ios.cert.path";
+	public static final String IOS_CERTIFICATE_PATH = "ios.certificate.path";
 
 	public static final String IOS_SANDBOX = "ios.sandbox";
 

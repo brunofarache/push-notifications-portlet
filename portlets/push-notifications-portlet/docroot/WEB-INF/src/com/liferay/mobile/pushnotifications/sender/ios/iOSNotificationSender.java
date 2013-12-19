@@ -71,8 +71,8 @@ public class IOSNotificationSender {
 
 	protected static ApnsService getService() {
 		if (_apns == null) {
-			String path = PortletPropsValues.IOS_CERT_PATH;
-			String password = PortletPropsValues.IOS_CERT_PASSWORD;
+			String path = PortletPropsValues.IOS_CERTIFICATE_PATH;
+			String password = PortletPropsValues.IOS_CERTIFICATE_PASSWORD;
 			boolean sandbox = Boolean.valueOf(PortletPropsValues.IOS_SANDBOX);
 
 			ApnsServiceBuilder builder = com.notnoop.apns.APNS.newService();
