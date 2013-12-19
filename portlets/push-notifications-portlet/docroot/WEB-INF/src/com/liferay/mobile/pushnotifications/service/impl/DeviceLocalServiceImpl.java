@@ -31,7 +31,7 @@ import java.util.List;
 public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 
 	@Override
-	public void addDevice(long userId, String token, String platform)
+	public Device addDevice(long userId, String token, String platform)
 		throws PortalException, SystemException {
 
 		long deviceId = counterLocalService.increment();
@@ -44,15 +44,19 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 		device.setCreateDate(new Date());
 
 		deviceLocalService.updateDevice(device);
+
+		return device;
 	}
 
 	@Override
-	public void deleteDevice(String token)
+	public Device deleteDevice(String token)
 		throws NoSuchDeviceException, SystemException {
 
 		Device device = devicePersistence.findByToken(token);
 
 		devicePersistence.remove(device);
+
+		return device;
 	}
 
 	@Override
@@ -78,7 +82,7 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void updateToken(String oldToken, String newToken)
+	public Device updateToken(String oldToken, String newToken)
 		throws NoSuchDeviceException, SystemException {
 
 		Device device = devicePersistence.findByToken(oldToken);
@@ -86,10 +90,12 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 		device.setToken(newToken);
 
 		devicePersistence.update(device);
+
+		return device;
 	}
 
 	@Override
-	public void updateUserId(long userId, String token)
+	public Device updateUserId(long userId, String token)
 		throws NoSuchDeviceException, SystemException {
 
 		Device device = devicePersistence.findByToken(token);
@@ -97,6 +103,8 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 		device.setUserId(userId);
 
 		devicePersistence.update(device);
+
+		return device;
 	}
 
 }

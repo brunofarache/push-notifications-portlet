@@ -29,21 +29,23 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 
 	@Override
-	public void addDevice(String token, String platform)
+	public Device addDevice(String token, String platform)
 		throws PortalException, SystemException {
 
-		deviceLocalService.addDevice(getUserId(), token, platform);
+		return deviceLocalService.addDevice(getUserId(), token, platform);
 	}
 
 	@Override
-	public void deleteDevice(String token)
+	public Device deleteDevice(String token)
 		throws PortalException, SystemException {
 
+		Device device = null;
+
 		try {
-			Device device = deviceLocalService.getDeviceByToken(token);
+			device = deviceLocalService.getDeviceByToken(token);
 
 			if (getUserId() == device.getUserId()) {
-				deviceLocalService.deleteDevice(device.getToken());
+				device = deviceLocalService.deleteDevice(token);
 			}
 		}
 		catch (NoSuchDeviceException nsde) {
@@ -51,20 +53,26 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 				_log.info("Device " + token + " does not exist");
 			}
 		}
+
+		return device;
 	}
 
 	@Override
-	public void updateUserId(String token)
+	public Device updateUserId(String token)
 		throws PortalException, SystemException {
 
+		Device device = null;
+
 		try {
-			deviceLocalService.updateUserId(getUserId(), token);
+			device = deviceLocalService.updateUserId(getUserId(), token);
 		}
 		catch (NoSuchDeviceException nsde) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Device " + token + " does not exist");
 			}
 		}
+
+		return device;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DeviceServiceImpl.class);
