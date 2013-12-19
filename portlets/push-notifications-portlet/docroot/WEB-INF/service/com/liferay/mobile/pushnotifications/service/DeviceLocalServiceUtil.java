@@ -275,23 +275,45 @@ public class DeviceLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void addDevice(long userId, java.lang.String token,
-		java.lang.String platform)
+	public static com.liferay.mobile.pushnotifications.model.Device addDevice(
+		long userId, java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().addDevice(userId, token, platform);
+		return getService().addDevice(userId, token, platform);
 	}
 
-	public static void deleteDevice(long userId, java.lang.String token)
+	public static com.liferay.mobile.pushnotifications.model.Device deleteDevice(
+		java.lang.String token)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDevice(userId, token);
+		return getService().deleteDevice(token);
 	}
 
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
-		long userId, java.lang.String platform)
+	public static com.liferay.mobile.pushnotifications.model.Device getDeviceByToken(
+		java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDeviceByToken(token);
+	}
+
+	public static java.util.List<java.lang.String> getTokens(long userId,
+		java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserDevices(userId, platform);
+		return getService().getTokens(userId, platform);
+	}
+
+	public static com.liferay.mobile.pushnotifications.model.Device updateToken(
+		java.lang.String oldToken, java.lang.String newToken)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateToken(oldToken, newToken);
+	}
+
+	public static com.liferay.mobile.pushnotifications.model.Device updateUserId(
+		long userId, java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateUserId(userId, token);
 	}
 
 	public static void clearService() {

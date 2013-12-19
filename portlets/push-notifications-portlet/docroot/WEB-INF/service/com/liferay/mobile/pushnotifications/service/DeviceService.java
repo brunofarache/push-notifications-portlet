@@ -64,11 +64,18 @@ public interface DeviceService extends BaseService, InvokableService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void addDevice(java.lang.String token, java.lang.String platform)
+	public com.liferay.mobile.pushnotifications.model.Device addDevice(
+		java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteDevice(java.lang.String token)
+	public com.liferay.mobile.pushnotifications.model.Device deleteDevice(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.mobile.pushnotifications.model.Device updateUserId(
+		java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

@@ -57,17 +57,27 @@ public class DeviceServiceWrapper implements DeviceService,
 	}
 
 	@Override
-	public void addDevice(java.lang.String token, java.lang.String platform)
+	public com.liferay.mobile.pushnotifications.model.Device addDevice(
+		java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_deviceService.addDevice(token, platform);
+		return _deviceService.addDevice(token, platform);
 	}
 
 	@Override
-	public void deleteDevice(java.lang.String token)
+	public com.liferay.mobile.pushnotifications.model.Device deleteDevice(
+		java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_deviceService.deleteDevice(token);
+		return _deviceService.deleteDevice(token);
+	}
+
+	@Override
+	public com.liferay.mobile.pushnotifications.model.Device updateUserId(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _deviceService.updateUserId(token);
 	}
 
 	/**

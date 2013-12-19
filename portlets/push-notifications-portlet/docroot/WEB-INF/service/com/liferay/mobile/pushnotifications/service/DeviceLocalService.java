@@ -249,17 +249,34 @@ public interface DeviceLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void addDevice(long userId, java.lang.String token,
-		java.lang.String platform)
+	public com.liferay.mobile.pushnotifications.model.Device addDevice(
+		long userId, java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteDevice(long userId, java.lang.String token)
+	public com.liferay.mobile.pushnotifications.model.Device deleteDevice(
+		java.lang.String token)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
-		long userId, java.lang.String platform)
+	public com.liferay.mobile.pushnotifications.model.Device getDeviceByToken(
+		java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.String> getTokens(long userId,
+		java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.mobile.pushnotifications.model.Device updateToken(
+		java.lang.String oldToken, java.lang.String newToken)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.mobile.pushnotifications.model.Device updateUserId(
+		long userId, java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

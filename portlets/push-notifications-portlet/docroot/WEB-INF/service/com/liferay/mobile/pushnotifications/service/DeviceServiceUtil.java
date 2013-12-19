@@ -63,17 +63,25 @@ public class DeviceServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void addDevice(java.lang.String token,
-		java.lang.String platform)
+	public static com.liferay.mobile.pushnotifications.model.Device addDevice(
+		java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().addDevice(token, platform);
+		return getService().addDevice(token, platform);
 	}
 
-	public static void deleteDevice(java.lang.String token)
+	public static com.liferay.mobile.pushnotifications.model.Device deleteDevice(
+		java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDevice(token);
+		return getService().deleteDevice(token);
+	}
+
+	public static com.liferay.mobile.pushnotifications.model.Device updateUserId(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateUserId(token);
 	}
 
 	public static void clearService() {

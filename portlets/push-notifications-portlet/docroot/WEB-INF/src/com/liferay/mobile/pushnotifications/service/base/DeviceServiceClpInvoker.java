@@ -41,6 +41,10 @@ public class DeviceServiceClpInvoker {
 		_methodName25 = "deleteDevice";
 
 		_methodParameterTypes25 = new String[] { "java.lang.String" };
+
+		_methodName26 = "updateUserId";
+
+		_methodParameterTypes26 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -59,17 +63,18 @@ public class DeviceServiceClpInvoker {
 
 		if (_methodName24.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
-			DeviceServiceUtil.addDevice((java.lang.String)arguments[0],
+			return DeviceServiceUtil.addDevice((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1]);
-
-			return null;
 		}
 
 		if (_methodName25.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
-			DeviceServiceUtil.deleteDevice((java.lang.String)arguments[0]);
+			return DeviceServiceUtil.deleteDevice((java.lang.String)arguments[0]);
+		}
 
-			return null;
+		if (_methodName26.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
+			return DeviceServiceUtil.updateUserId((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -83,4 +88,6 @@ public class DeviceServiceClpInvoker {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

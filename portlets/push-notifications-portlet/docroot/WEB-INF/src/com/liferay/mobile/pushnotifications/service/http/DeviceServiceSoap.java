@@ -62,10 +62,14 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DeviceServiceSoap {
-	public static void addDevice(java.lang.String token,
-		java.lang.String platform) throws RemoteException {
+	public static com.liferay.mobile.pushnotifications.model.DeviceSoap addDevice(
+		java.lang.String token, java.lang.String platform)
+		throws RemoteException {
 		try {
-			DeviceServiceUtil.addDevice(token, platform);
+			com.liferay.mobile.pushnotifications.model.Device returnValue = DeviceServiceUtil.addDevice(token,
+					platform);
+
+			return com.liferay.mobile.pushnotifications.model.DeviceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -74,10 +78,26 @@ public class DeviceServiceSoap {
 		}
 	}
 
-	public static void deleteDevice(java.lang.String token)
-		throws RemoteException {
+	public static com.liferay.mobile.pushnotifications.model.DeviceSoap deleteDevice(
+		java.lang.String token) throws RemoteException {
 		try {
-			DeviceServiceUtil.deleteDevice(token);
+			com.liferay.mobile.pushnotifications.model.Device returnValue = DeviceServiceUtil.deleteDevice(token);
+
+			return com.liferay.mobile.pushnotifications.model.DeviceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.mobile.pushnotifications.model.DeviceSoap updateUserId(
+		java.lang.String token) throws RemoteException {
+		try {
+			com.liferay.mobile.pushnotifications.model.Device returnValue = DeviceServiceUtil.updateUserId(token);
+
+			return com.liferay.mobile.pushnotifications.model.DeviceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
