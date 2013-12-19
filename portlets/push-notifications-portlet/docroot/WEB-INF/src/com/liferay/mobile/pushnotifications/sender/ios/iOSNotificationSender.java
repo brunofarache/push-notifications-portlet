@@ -13,8 +13,6 @@
  */
 package com.liferay.mobile.pushnotifications.sender.ios;
 
-import com.liferay.mobile.pushnotifications.model.Device;
-import com.liferay.mobile.pushnotifications.sender.BaseNotificationSender;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
 import com.liferay.mobile.pushnotifications.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,20 +29,17 @@ import java.util.List;
 /**
  * @author Silvio Santos
  */
-public class iOSNotificationSender extends BaseNotificationSender {
+public class iOSNotificationSender {
 
 	public static void send(
 			long userId, String data, String alert, int badge, String sound)
 		throws IOException, PortalException, SystemException {
 
-		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(
-			userId, IOS);
+		List<String> tokens = DeviceLocalServiceUtil.getTokens(userId, IOS);
 
-		if (devices.isEmpty()) {
+		if (tokens.isEmpty()) {
 			return;
 		}
-
-		List<String> tokens = getTokens(devices);
 
 		String message = buildMessage(data, alert, badge, sound);
 

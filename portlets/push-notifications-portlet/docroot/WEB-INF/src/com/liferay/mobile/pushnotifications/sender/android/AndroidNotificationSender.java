@@ -20,7 +20,6 @@ import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
 
-import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
 import com.liferay.mobile.pushnotifications.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,14 +42,11 @@ public class AndroidNotificationSender {
 			boolean delayWhileIdle)
 		throws IOException, SystemException {
 
-		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(
-			userId, ANDROID);
+		List<String> tokens = DeviceLocalServiceUtil.getTokens(userId, ANDROID);
 
-		if (devices.isEmpty()) {
+		if (tokens.isEmpty()) {
 			return;
 		}
-
-		List<String> tokens = getTokens(devices);
 
 		Message message = buildMessage(
 			collapseKey, data, timeToLive, delayWhileIdle);
@@ -60,7 +55,7 @@ public class AndroidNotificationSender {
 
 		MulticastResult multicastResult = sender.send(message, tokens, 5);
 
-		handleResponse(devices, multicastResult);
+		handleResponse(tokens, multicastResult);
 	}
 
 	protected static Message buildMessage(
@@ -86,18 +81,8 @@ public class AndroidNotificationSender {
 		return builder.build();
 	}
 
-	protected static List<String> getTokens(List<Device> devices) {
-		List<String> tokens = new ArrayList<String>();
-
-		for (Device device : devices) {
-			tokens.add(device.getToken());
-		}
-
-		return tokens;
-	}
-
 	protected static void handleResponse(
-		List<Device> devices, MulticastResult multicastResult) {
+		List<String> tokens, MulticastResult multicastResult) {
 
 		if ((multicastResult.getCanonicalIds() == 0) &&
 			(multicastResult.getFailure() == 0)) {
@@ -111,19 +96,14 @@ public class AndroidNotificationSender {
 			Result result = results.get(i);
 
 			String messageId = result.getMessageId();
-			String token = result.getCanonicalRegistrationId();
-
-			Device device = devices.get(i);
+			String registrationId = result.getCanonicalRegistrationId();
+			String token = tokens.get(i);
 
 			try {
 				if (Validator.isNotNull(messageId) &&
-					Validator.isNotNull(token)) {
+					Validator.isNotNull(registrationId)) {
 
-					DeviceLocalServiceUtil.deleteDevice(device);
-
-					device.setToken(token);
-
-					DeviceLocalServiceUtil.addDevice(device);
+					DeviceLocalServiceUtil.updateToken(token, registrationId);
 
 					continue;
 				}
@@ -134,12 +114,12 @@ public class AndroidNotificationSender {
 					if (error.equals(Constants.ERROR_NOT_REGISTERED) ||
 						error.equals(Constants.ERROR_INVALID_REGISTRATION)) {
 
-						DeviceLocalServiceUtil.deleteDevice(device);
+						DeviceLocalServiceUtil.deleteDevice(token);
 					}
 				}
 			}
-			catch (SystemException se) {
-				_log.error(se);
+			catch (Exception e) {
+				_log.error(e);
 			}
 		}
 	}

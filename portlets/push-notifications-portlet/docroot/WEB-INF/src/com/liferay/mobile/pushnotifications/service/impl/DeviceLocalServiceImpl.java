@@ -20,6 +20,7 @@ import com.liferay.mobile.pushnotifications.service.base.DeviceLocalServiceBaseI
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,21 +52,45 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteDevice(long userId, String token)
+	public void deleteDevice(String token)
 		throws NoSuchDeviceException, SystemException {
 
 		Device device = devicePersistence.findByToken(token);
 
-		if (userId == device.getUserId()) {
-			devicePersistence.remove(device);
-		}
+		devicePersistence.remove(device);
 	}
 
 	@Override
-	public List<Device> getUserDevices(long userId, String platform)
+	public Device getDeviceByToken(String token)
+		throws NoSuchDeviceException, SystemException {
+
+		return devicePersistence.findByToken(token);
+	}
+
+	@Override
+	public List<String> getTokens(long userId, String platform)
 		throws SystemException {
 
-		return devicePersistence.findByU_P(userId, platform);
+		List<String> tokens = new ArrayList<String>();
+
+		List<Device> devices = devicePersistence.findByU_P(userId, platform);
+
+		for (Device device : devices) {
+			tokens.add(device.getToken());
+		}
+
+		return tokens;
+	}
+
+	@Override
+	public void updateToken(String oldToken, String newToken)
+		throws NoSuchDeviceException, SystemException {
+
+		Device device = devicePersistence.findByToken(oldToken);
+
+		device.setToken(newToken);
+
+		devicePersistence.update(device);
 	}
 
 }

@@ -14,9 +14,13 @@
 
 package com.liferay.mobile.pushnotifications.service.impl;
 
+import com.liferay.mobile.pushnotifications.NoSuchDeviceException;
+import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.base.DeviceServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author Silvio Santos
@@ -35,7 +39,20 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 	public void deleteDevice(String token)
 		throws PortalException, SystemException {
 
-		deviceLocalService.deleteDevice(getUserId(), token);
+		try {
+			Device device = deviceLocalService.getDeviceByToken(token);
+
+			if (getUserId() == device.getUserId()) {
+				deviceLocalService.deleteDevice(device.getToken());
+			}
+		}
+		catch (NoSuchDeviceException nsde) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Device " + token + " does not exist");
+			}
+		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(DeviceServiceImpl.class);
 
 }
